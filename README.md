@@ -12,6 +12,6 @@ In the future I plan to add:
 
 # Requirements
 
-Python 3
-Kivy 1.10.1 (that's the version I used, though other versions may work as well)
+* Python 3
+* Kivy 1.10.1 (that's the version I used, though other versions may work as well)
 
