@@ -1,0 +1,91 @@
+#: import GoalObject main.GoalObject
+RootWidget:
+	MainScreen
+
+<MainScreen@Screen>:
+	name: "main"
+	content: content
+	BoxLayout:
+		padding: 5
+		orientation: "vertical"
+		BoxLayout:
+			size_hint: 1, None
+			height: 100
+			orientation: "horizontal"
+			Label:
+				font_size: 50
+				text: "How well have you mastered:"
+			Button:
+				size_hint: None, None
+				font_size: 100
+				width: 100
+				text: "+"
+				# Add element to the end of content
+				on_release: content.add_widget(GoalObject(), len(content.children))
+		ScrollView:
+			scroll_timeout: 0
+			GridLayout:
+				spacing: 10
+				cols: 1
+				size_hint_y: None
+				height: self.minimum_height
+				id: content
+				orientation: "vertical"
+
+<GoalObject>:
+	nameInput: nameInput
+	slider: bar
+	mainColor: .4, .4, 1, 1
+	orientation: "vertical"
+	size_hint: 1, None
+	height: 100
+	canvas:
+		Color:
+			rgba: root.mainColor
+		Rectangle:
+			pos: self.pos
+			size: self.size
+	BoxLayout:
+		size_hint: 1, None
+		height: 40
+		orientation: "horizontal"
+		SimplisticTextInput:
+			id: nameInput
+			hint_text: "" if self.focus else "Write your goal here"
+			background_color: root.mainColor
+		Button:
+			text: "x"
+			font_size: 30
+			size_hint: None, 1
+			width: self.height
+			on_release: root.parent.remove_widget(root)
+
+	BoxLayout:
+		orientation: "horizontal"
+		Slider: 
+			id: bar
+			value_track: True
+			step: 5
+			value: 0
+			max: 100
+		Label:
+			size_hint: None, 1
+			width: 100
+			text: str(int(bar.value))+"%"
+
+<SimplisticTextInput@TextInput>:
+	background_normal: ""
+	background_active: ""
+	background_disabled_normal: ""
+	hint_text_color: .3, .3, .3, 1
+	canvas.after:
+		Color:
+			rgba: (0, 0, 0, 1) if self.focus else self.hint_text_color
+		Line:
+			width: 2
+			points: self.x+5, self.y+5, self.right-5, self.y+5
+	font_size: 24
+	multiline: False
+
+<Button>:
+	background_color: 0.8, 0.8, 1, 1
