@@ -2,7 +2,7 @@
 from kivy.app import App 
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.boxlayout import BoxLayout
-from kivy.properties import ObjectProperty, ListProperty, NumericProperty, ReferenceListProperty
+from kivy.properties import ObjectProperty, ListProperty, NumericProperty, ReferenceListProperty, BooleanProperty
 from kivy.clock import Clock
 from kivy.uix.textinput import TextInput
 from kivy.uix.widget import Widget
@@ -64,7 +64,19 @@ class MainApp(App):
 		self.on_stop()
 
 class GoalMoveArea(Widget):
-	pass
+	touched = BooleanProperty(False)
+	def on_touch_down(self, touch):
+		if self.collide_point(*touch.pos):
+			# Make element transparent
+			print(self.touched)
+			touch.grab(self)
+			self.touched = True
+	def on_touch_up(self, touch):
+		if touch.grab_current is self:
+			# Make element no longer transparent
+			print(touch)
+			touch.ungrab(self)
+			self.touched = False
 
 
 class GoalObject(BoxLayout):

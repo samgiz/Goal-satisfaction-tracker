@@ -36,8 +36,10 @@ RootWidget:
 	nameInput: nameInput
 	slider: bar
 	mainColor: .4, .4, 1, 1
+	floating: goalMoveArea.touched
 	orientation: "vertical"
 	size_hint: 1, None
+	opacity: 0 if self.floating else 1
 	height: 100
 	canvas:
 		Color:
@@ -73,6 +75,7 @@ RootWidget:
 			width: 100
 			text: str(int(bar.value))+"%"
 		GoalMoveArea:
+			id: goalMoveArea
 			size_hint: None, 1
 			width: self.height
 
@@ -91,6 +94,8 @@ RootWidget:
 	multiline: False
 
 <GoalMoveArea>:
+	on_touch_down: self.on_touch_down(args[1])
+	on_touch_up: self.on_touch_up(args[1])
 	canvas:
 		Rectangle:
 			pos: self.pos
