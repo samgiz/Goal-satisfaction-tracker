@@ -72,6 +72,9 @@ RootWidget:
 			size_hint: None, 1
 			width: 100
 			text: str(int(bar.value))+"%"
+		GoalMoveArea:
+			size_hint: None, 1
+			width: self.height
 
 <SimplisticTextInput@TextInput>:
 	background_normal: ""
@@ -86,6 +89,13 @@ RootWidget:
 			points: self.x+5, self.y+5, self.right-5, self.y+5
 	font_size: 24
 	multiline: False
+
+<GoalMoveArea>:
+	canvas:
+		Rectangle:
+			pos: self.pos
+			size: self.size
+			source: 'bars.png'
 
 <Button>:
 	background_color: 0.8, 0.8, 1, 1
