@@ -88,15 +88,44 @@ class GoalMoveArea(Widget):
 
 	def on_touch_move(self, touch):
 		if touch.grab_current is self:
+			# Adjust position of the floating element
 			self.floating_goal_object.y += touch.y-self.last_touch
-			print(self.floating_goal_object.y)
 			self.last_touch = touch.y
+
+			# Check if we need to swap elements and swap them if necessary
+			goal_object = self.parent.parent
+			parent = goal_object.parent
+			children = parent.children[:]
+
+			# find position of floating element in its parent
+			cur = 0
+			for i in range(len(children)):
+				if children[i] == goal_object:
+					cur = i
+					break
+
+			# Check if we need swapping with element above
+			while cur != len(children)-1 and children[cur+1].to_window(0, children[cur+1].y)[1] < touch.y:
+				# Swap cur and cur+1
+				parent.remove_widget(children[cur])
+				parent.remove_widget(children[cur+1])
+				parent.add_widget(children[cur], cur)
+				parent.add_widget(children[cur+1], cur)
+				cur += 1
+
+			# Check if we need swapping with element below
+			while cur != 0 and children[cur-1].height + children[cur-1].to_window(0, children[cur-1].y)[1] > touch.y:
+				# Swap cur and cur-1
+				parent.remove_widget(children[cur])
+				parent.remove_widget(children[cur-1])
+				parent.add_widget(children[cur-1], cur-1)
+				parent.add_widget(children[cur], cur-1)
+				cur -= 1
 
 
 	def on_touch_up(self, touch):
 		if touch.grab_current is self:
 			# Make element no longer transparent
-			print(touch)
 			touch.ungrab(self)
 			self.touched = False
 
@@ -137,9 +166,7 @@ if __name__ == "__main__":
 
 # Main part:
 
-# Add drag and drop functionality
-# Add padding around goal
-# Fix colours to make it appealing
+# Start scrolling when close to the bottom or top
 # Possibly add a way to change the color of individual goals?
 # Add subgoals
 
