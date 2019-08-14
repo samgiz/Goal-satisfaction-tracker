@@ -70,6 +70,7 @@ class GoalMoveArea(Widget):
 			# Make element transparent
 			touch.grab(self)
 			self.touched = True
+			self.last_touch = touch.y
 
 			# Create a scatter to hold floating element
 			goal_object = self.parent.parent
@@ -84,6 +85,12 @@ class GoalMoveArea(Widget):
 			self.floating_goal_object = goal_object_copy
 			App.get_running_app().root.get_screen("main").add_widget(goal_object_copy)
 			return True
+
+	def on_touch_move(self, touch):
+		if touch.grab_current is self:
+			self.floating_goal_object.y += touch.y-self.last_touch
+			print(self.floating_goal_object.y)
+			self.last_touch = touch.y
 
 
 	def on_touch_up(self, touch):
