@@ -68,18 +68,22 @@ class GoalMoveArea(Widget):
 	def on_touch_down(self, touch):
 		if self.collide_point(*touch.pos):
 			# Make element transparent
-			print(self.touched)
 			touch.grab(self)
 			self.touched = True
 
 			# Create a scatter to hold floating element
 			goal_object = self.parent.parent
 			goal_object_copy = GoalObject(value=goal_object.slider.value, name=goal_object.nameInput.text)
+			
+			# Set correct absolute position and size
 			goal_object_copy.pos = goal_object.to_window(goal_object.x, goal_object.y)
 			goal_object_copy.size = goal_object.size
+
+			# Place object absolutely
 			goal_object_copy.size_hint = (None, None)
 			self.floating_goal_object = goal_object_copy
-			App.get_running_app().root.get_screen("main").add_widget(self.floating_goal_object)
+			App.get_running_app().root.get_screen("main").add_widget(goal_object_copy)
+			return True
 
 
 	def on_touch_up(self, touch):
@@ -89,9 +93,9 @@ class GoalMoveArea(Widget):
 			touch.ungrab(self)
 			self.touched = False
 
-			# Remove scatter from view and object
-			print(App.get_running_app().root.get_screen("main").children)
+			# Remove widget from view and object
 			App.get_running_app().root.get_screen("main").remove_widget(self.floating_goal_object)
+			return True
 
 
 class GoalObject(BoxLayout):
