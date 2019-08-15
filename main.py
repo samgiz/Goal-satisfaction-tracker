@@ -73,12 +73,15 @@ class GoalMoveArea(Widget):
 			return
 		new_pos = scroll_view.scroll_y
 		# print(scroll_view.y, touch.y)
-		if touch.y - scroll_view.y < 50:
+		if touch.y - scroll_view.y < 50 and scroll_view.scroll_y != 0:
 			# print(new_pos, new_pos + scroll_view.convert_distance_to_scroll(0, 1)[1])
 			new_pos -= scroll_view.convert_distance_to_scroll(0, 1)[1]
+			self.scrolled_amount += 1
 		# print(touch.y, scroll_view.y, scroll_view.height)
-		if (scroll_view.y + scroll_view.height) - touch.y < 50:
+		if (scroll_view.y + scroll_view.height) - touch.y < 50 and scroll_view.scroll_y != 1:
 			new_pos += scroll_view.convert_distance_to_scroll(0, 1)[1]
+			self.scrolled_amount -= 1
+		
 		scroll_view.scroll_y = min(1, max(0, new_pos))
 		Clock.schedule_once(partial(self.scroll_if_necessary, touch, scroll_view))
 
@@ -87,6 +90,7 @@ class GoalMoveArea(Widget):
 			# Make element transparent
 			touch.grab(self)
 			self.touched = True
+			self.scrolled_amount = 0
 			self.last_touch = touch.y
 
 			# Create a scatter to hold floating element
@@ -109,7 +113,8 @@ class GoalMoveArea(Widget):
 	def on_touch_move(self, touch):
 		if touch.grab_current is self:
 			# Adjust position of the floating element
-			self.floating_goal_object.y += touch.y-self.last_touch
+			self.floating_goal_object.y += touch.y-self.last_touch + self.scrolled_amount
+			self.scrolled_amount = 0
 			self.last_touch = touch.y
 
 			# Check if we need to swap elements and swap them if necessary
