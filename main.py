@@ -7,6 +7,8 @@ from kivy.clock import Clock
 from kivy.uix.textinput import TextInput
 from kivy.uix.widget import Widget
 
+from functools import partial
+
 import os
 dir_path = os.path.dirname(os.path.realpath(__file__))
 goal_data_path = os.path.join(dir_path, ".goaldata.json")
@@ -65,6 +67,21 @@ class MainApp(App):
 
 class GoalMoveArea(Widget):
 	touched = BooleanProperty(False)
+
+	def scroll_if_necessary(self, touch, scroll_view, *args):
+		if not self.touched:
+			return
+		new_pos = scroll_view.scroll_y
+		# print(scroll_view.y, touch.y)
+		if touch.y - scroll_view.y < 50:
+			# print(new_pos, new_pos + scroll_view.convert_distance_to_scroll(0, 1)[1])
+			new_pos -= scroll_view.convert_distance_to_scroll(0, 1)[1]
+		# print(touch.y, scroll_view.y, scroll_view.height)
+		if (scroll_view.y + scroll_view.height) - touch.y < 50:
+			new_pos += scroll_view.convert_distance_to_scroll(0, 1)[1]
+		scroll_view.scroll_y = min(1, max(0, new_pos))
+		Clock.schedule_once(partial(self.scroll_if_necessary, touch, scroll_view))
+
 	def on_touch_down(self, touch):
 		if self.collide_point(*touch.pos):
 			# Make element transparent
@@ -76,6 +93,9 @@ class GoalMoveArea(Widget):
 			goal_object = self.parent.parent
 			goal_object_copy = GoalObject(value=goal_object.slider.value, name=goal_object.nameInput.text)
 			
+			scroll_view = goal_object.parent.parent
+			Clock.schedule_once(partial(self.scroll_if_necessary, touch, scroll_view))
+
 			# Set correct absolute position and size
 			goal_object_copy.pos = goal_object.to_window(goal_object.x, goal_object.y)
 			goal_object_copy.size = goal_object.size
@@ -121,6 +141,7 @@ class GoalMoveArea(Widget):
 				parent.add_widget(children[cur-1], cur-1)
 				parent.add_widget(children[cur], cur-1)
 				cur -= 1
+			# Scroll up/down if necessary
 
 
 	def on_touch_up(self, touch):
