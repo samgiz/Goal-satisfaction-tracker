@@ -19,13 +19,6 @@ import json
 class RootWidget(ScreenManager):
 	pass
 
-# Drag and drop functionality plan
-# 1. When a content element is pressed on a certain area, create scatter as follows
-# 	 scatter = Scatter(do_rotation=False, do_scale=False, do_translation_x=False)
-# 2. Make the initial element transparent
-# 3. Whenever the scatter moves, check the mouse position. If the mouse is no longer over the original element, swap elements around until it is
-# 4. When releasing scatter, make the element no longer transparent and remove scatter
-
 # Holds all the content
 class MainScreen(Screen):
 	# Holds the GridLayout object that actually contains the satisfaction elements
@@ -192,7 +185,7 @@ if __name__ == "__main__":
 
 # Main part:
 
-# Start scrolling when close to the bottom or top
+# Adjust scrolling speed depending on how close to the edge we are
 # Possibly add a way to change the color of individual goals?
 # Add subgoals
 
