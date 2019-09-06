@@ -1,6 +1,4 @@
 *.json
 *.pyc
 .vscode/
-bin/
-include/
-lib/
+env/
