@@ -65,6 +65,7 @@ class GoalMoveArea(Widget):
 		if not self.touched:
 			return
 		new_pos = scroll_view.scroll_y
+		scrolling_pixels_amount = min(abs(touch.y - scroll_view.y), abs(touch.y - scroll_view.y))//10
 		# print(scroll_view.y, touch.y)
 		if touch.y - scroll_view.y < 50 and scroll_view.scroll_y != 0:
 			# print(new_pos, new_pos + scroll_view.convert_distance_to_scroll(0, 1)[1])
@@ -194,4 +195,3 @@ if __name__ == "__main__":
 # Add menu
 # Make menu have 3 tabs: main, statistics and options
 # Statistics can draw graphs
-# Can change slider increment in options

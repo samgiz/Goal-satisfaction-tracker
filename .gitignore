@@ -1,2 +1,6 @@
 *.json
 *.pyc
+.vscode/
+bin/
+include/
+lib/
