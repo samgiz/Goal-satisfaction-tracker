@@ -11,8 +11,13 @@ In the future I plan to add:
 * a separate tab for completed goals (hall of fame)
 * possibly some way to track statistics and draw graphs, so that one could check their progress over time
 
-# Requirements
+# Setup
 
-* Python 3
-* Kivy 1.10.1 (that's the version I used, though other versions may work as well)
+You need to have Python 3 installed, along with the following libraries:
+* Cython
+* kivy
+* pygame
 
+Assuming you have Python3 set up, you can simply run `cat requirements.txt | xargs -n 1 -L 1 pip3 install` in order to install the packages. It is important to do it this way and **not** `pip3 install -r requirements.txt`, so that the packages are installed one at a time, since Cython is a prerequisite for Kivy.
+
+Once the installation is complete you may run the app with `python3 main.py` from the root directory.
