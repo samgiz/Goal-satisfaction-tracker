@@ -63,6 +63,10 @@ RootWidget:
 
 	BoxLayout:
 		orientation: "horizontal"
+		GoalMoveArea:
+			id: goalMoveArea
+			size_hint: None, 1
+			width: self.height
 		Slider: 
 			id: bar
 			value_track: True
@@ -73,10 +77,6 @@ RootWidget:
 			size_hint: None, 1
 			width: 100
 			text: str(int(bar.value))+"%"
-		GoalMoveArea:
-			id: goalMoveArea
-			size_hint: None, 1
-			width: self.height
 
 <SimplisticTextInput@TextInput>:
 	background_normal: ""
