@@ -1,0 +1,48 @@
+#:include main_screen/goal_object/SimplisticTextInput.kv
+
+<GoalObject>:
+	nameInput: nameInput
+	slider: bar
+	mainColor: .4, .4, 1, 1
+	orientation: "vertical"
+	size_hint: 1, None
+	opacity: 0 if goalMoveArea.touched else 1
+	height: 100
+	canvas:
+		Color:
+			rgba: root.mainColor
+		Rectangle:
+			pos: self.pos
+			size: self.size
+	BoxLayout:
+		size_hint: 1, None
+		height: 40
+		orientation: "horizontal"
+		SimplisticTextInput:
+			id: nameInput
+			hint_text: "" if self.focus else "Write your goal here"
+			background_color: root.mainColor
+		Button:
+			text: "x"
+			font_size: 30
+			size_hint: None, 1
+			width: self.height
+			on_release: root.parent.remove_widget(root)
+
+	BoxLayout:
+		orientation: "horizontal"
+		GoalMoveArea:
+			id: goalMoveArea
+			goal_object: root
+			size_hint: None, 1
+			width: self.height
+		Slider: 
+			id: bar
+			value_track: True
+			step: 5
+			value: 0
+			max: 100
+		Label:
+			size_hint: None, 1
+			width: 100
+			text: str(int(bar.value))+"%"

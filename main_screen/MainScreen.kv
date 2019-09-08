@@ -1,0 +1,30 @@
+
+<MainScreen>:
+	name: "main"
+	content: content
+	BoxLayout:
+		padding: 5
+		orientation: "vertical"
+		BoxLayout:
+			size_hint: 1, None
+			height: 100
+			orientation: "horizontal"
+			Label:
+				font_size: 50
+				text: "How well have you mastered:"
+			Button:
+				size_hint: None, None
+				font_size: 100
+				width: 100
+				text: "+"
+				# Add element to the end of content
+				on_release: content.add_widget(GoalObject(), len(content.children))
+		ScrollView:
+			scroll_timeout: 0
+			GridLayout:
+				spacing: 10
+				cols: 1
+				size_hint_y: None
+				height: self.minimum_height
+				id: content
+				orientation: "vertical"
