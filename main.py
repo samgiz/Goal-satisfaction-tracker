@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 from kivy.app import App 
 from kivy.uix.screenmanager import ScreenManager
 from main_screen.MainScreen import MainScreen

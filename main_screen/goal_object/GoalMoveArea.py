@@ -31,6 +31,8 @@ class GoalMoveArea(Widget):
 		if (scroll_view.y + scroll_view.height) - touch.y < 50 and scroll_view.scroll_y != 1:
 			new_pos += scroll_view.convert_distance_to_scroll(0, 1)[1]
 			self.scrolled_amount -= 1
+		# Should exit in case we don't need to scroll any more
+		# And save that we are no longer scrolling
 		
 		scroll_view.scroll_y = min(1, max(0, new_pos))
 		Clock.schedule_once(partial(self.scroll_if_necessary, touch, scroll_view))
@@ -84,6 +86,8 @@ class GoalMoveArea(Widget):
 				parent.remove_widget(children[cur+1])
 				parent.add_widget(children[cur], cur)
 				parent.add_widget(children[cur+1], cur)
+				# Maintain the order in the local copy
+				children[cur], children[cur+1] = children[cur+1], children[cur]
 				cur += 1
 
 			# Check if we need swapping with element below
@@ -93,6 +97,8 @@ class GoalMoveArea(Widget):
 				parent.remove_widget(children[cur-1])
 				parent.add_widget(children[cur-1], cur-1)
 				parent.add_widget(children[cur], cur-1)
+				# Maintain the order in the local copy
+				children[cur], children[cur-1] = children[cur-1], children[cur]
 				cur -= 1
 			# Scroll up/down if necessary
 
