@@ -13,11 +13,11 @@ In the future I plan to add:
 
 # Setup
 
-You need to have Python 3 installed, along with the following libraries:
+You need to have Python 3.5 or higher installed, along with the following libraries:
 * Cython
 * kivy
 * pygame
 
-Assuming you have Python3 set up, you can simply run `cat requirements.txt | xargs -n 1 -L 1 pip3 install` in order to install the packages. It is important to do it this way and **not** `pip3 install -r requirements.txt`, so that the packages are installed one at a time, since Cython is a prerequisite for Kivy.
+Assuming you have Python set up, you can simply run `cat requirements.txt | xargs -n 1 -L 1 pip3 install` in order to install the packages. It is important to do it this way and **not** `pip3 install -r requirements.txt`, so that the packages are installed one at a time, since Cython is a prerequisite for Kivy.
 
 Once the installation is complete you may run the app with `python3 main.py` from the root directory.
