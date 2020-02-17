@@ -1,3 +1,9 @@
+# Update
+
+This is an old project that does not work properly, I have made a new desktop app with similar functionality with Angular and Electron here: https://github.com/samgiz/goal_satisfaction_tracker.
+
+I'm keeping this repository for historical purposes.
+
 # Overview
 
 This is a fairly simple application to help track the progress of ones goals. The following functionalities are currently supported:
